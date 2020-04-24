@@ -9,14 +9,13 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 import java.util.Set;
 import Model.Videojuegos;
 /**
  * 
- * @author Francisco José Caro Carazo
+ * @author Francisco Josï¿½ Caro Carazo
  *
  */
 public class helper {
@@ -26,7 +25,7 @@ public class helper {
 	static int contador = 1;
 
 	/**
-	 * Método que se encarga de lanzar los datos guardados si es que los hay y de
+	 * Mï¿½todo que se encarga de lanzar los datos guardados si es que los hay y de
 	 * lanzar el menu principla del programa
 	 * 
 	 * @throws IOException IOException
@@ -39,10 +38,10 @@ public class helper {
 
 		do {
 			System.out.println("==========================================");
-			System.out.println("========= Gestión de Videojuegos =========");
+			System.out.println("========= Gestiï¿½n de Videojuegos =========");
 			System.out.println("==========================================");
 			System.out.println();
-			System.out.println("1.-Añadir un videojuego.");
+			System.out.println("1.-Aï¿½adir un videojuego.");
 			System.out.println("2.-Listar videojuegos.");
 			System.out.println("3.-Borrar un videojuego.");
 			System.out.println("4.-Guardar datos en fichero.");
@@ -81,14 +80,63 @@ public class helper {
 	}
 
 	/**
-	 * Metodo que sirve para poder añadir un videojuego a la lista
+	 * Metodo que sirve para poder aï¿½adir un videojuego a la lista
 	 * 
 	 * @throws IOException IOException
 	 */
-	
+	public static void aniadirVideojuego() throws IOException {
+		Scanner sc = new Scanner(System.in);
+		if (lista.size() > 10) {
+			System.out.println("La lista de juegos esta llena.\nPor favor borra un juego para poder crear otro.");
+		} else {
+			Videojuegos videojuego = new Videojuegos();
+			System.out.println("Introduzca los datos del videojuego");
+			String nombre;
+			do {
+				System.out.println("Nombre: ");
+				nombre = sc.nextLine();
+				videojuego.setNombre(nombre);
+			} while (nombre.isEmpty());
+			System.out.println("");
+			String plataforma = null;
+			System.out.println("Plataforma: ");
+			do {
+				try {
+					plataforma = sc.nextLine();
+					Validar.validar_plataforma(plataforma);
+					videojuego.setPlataforma(plataforma);
+				} catch (IllegalArgumentException e) {
+					System.err.println("Plataforma no valida");
+				}
+			} while (videojuego.getPlataforma() == null);
+			System.out.println("Fecha de lanzamiento del juego:");
+			LocalDate fecha = null;
+			do {
+				try {
+					System.out.println("Introduce el dia de lanzamiento");
+					int dia = ex.controlInt();
+					System.out.println("Introduce el mes de lanzamiento");
+					int mes = ex.controlInt();
+					System.out.println("Introduce el anio de lanzamiento");
+					int anio = ex.controlInt();
+					Validar.verificar_fecha(LocalDate.of(anio, mes, dia));
+					fecha = LocalDate.of(anio, mes, dia);
+					videojuego.setFecha_lanzamiento(fecha);
+				} catch (IllegalArgumentException e) {
+					System.err.println("Fecha de lanzamiento no vï¿½lida");
+				} catch (java.time.DateTimeException t) {
+					System.err.println("Fecha de lanzamiento no vï¿½lida");
+				}
+			} while (fecha == null);
+			System.out.println("Se ha creado el videojuego");
+			lista.put(saber_id() + 1, videojuego);
+
+		}
+
+	}
 
 	/**
-	 * Metodo que nos permite imprimir por panatalla todos los juegos que se han
+	 * Metodo que nos permite imprimir por pantalla todos los juegos que se han
 	 * creado.
 	 * 
 	 * @throws IOException IOException
@@ -106,7 +154,7 @@ public class helper {
 	}
 
 	/**
-	 * Método que nos permite Borrar un videojuego que este en la lista.
+	 * Mï¿½todo que nos permite Borrar un videojuego que este en la lista.
 	 * 
 	 * @throws IOException IOException
 	 */
@@ -121,7 +169,7 @@ public class helper {
 			Integer buscar = ex.controlInt();
 			if (lista.containsKey(buscar)) {
 				System.out.println("\n<--------Videojuego-------->\nCodigo de Juego: " + lista.get(buscar));
-				System.out.println("\n\n¿Deseea continuar con el borrado? S/N");
+				System.out.println("\n\nï¿½Deseea continuar con el borrado? S/N");
 				String confirmar = ex.textosinnumeros(sc.nextLine());
 				if (confirmar.equalsIgnoreCase("S")) {
 					lista.remove(buscar);
@@ -204,8 +252,8 @@ public class helper {
 		}
 		if (!lista.equals(temporal)) {
 			System.out.println("Ha realizado cambios que no ha guardado en disco.\n"
-					+ "Si continúa se perderán los cambios no guardados.\n"
-					+ "¿Desea continuar y guardar los datos en disco? (S/N)");
+					+ "Si continï¿½a se perderï¿½n los cambios no guardados.\n"
+					+ "ï¿½Desea continuar y guardar los datos en disco? (S/N)");
 
 			String confirmar_accion = ex.textosinnumeros(sc.nextLine());
 			if (confirmar_accion.equalsIgnoreCase("S")) {
@@ -307,9 +355,9 @@ public class helper {
 		}
 		if (!lista.equals(temporal)) {
 			System.out.println("Ha realizado cambios que no ha guardado en disco.\n"
-					+ "Si continúa la carga del archivo se restaurarán los datos\n"
-					+ "de disco y se perderán los cambios no guardados.\n"
-					+ "¿Desea continuar con la carga y restaurar los datos del archivo? (S/N)");
+					+ "Si continï¿½a la carga del archivo se restaurarï¿½n los datos\n"
+					+ "de disco y se perderï¿½n los cambios no guardados.\n"
+					+ "ï¿½Desea continuar con la carga y restaurar los datos del archivo? (S/N)");
 
 			String confirmar_accion = ex.textosinnumeros(sc.nextLine());
 			if (confirmar_accion.equalsIgnoreCase("S")) {
