@@ -1,12 +1,11 @@
 package operations;
 
 import java.io.IOException;
-import java.time.LocalDate;
 import java.util.Scanner;
 
 /**
  * 
- * @author Francisco José Caro Carazo
+ * @author Francisco Josï¿½ Caro Carazo
  *
  */
 public class Excepciones {
