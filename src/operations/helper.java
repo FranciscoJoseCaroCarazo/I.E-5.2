@@ -85,56 +85,7 @@ public class helper {
 	 * 
 	 * @throws IOException IOException
 	 */
-	public static void aniadirVideojuego() throws IOException {
-		Scanner sc = new Scanner(System.in);
-		if (lista.size() > 10) {
-			System.out.println("La lista de juegos esta llena.\nPor favor borra un juego para poder crear otro.");
-		} else {
-			Videojuegos videojuego = new Videojuegos();
-			System.out.println("Introduzca los datos del videojuego");
-			String nombre;
-			do {
-				System.out.println("Nombre: ");
-				nombre = sc.nextLine();
-				videojuego.setNombre(nombre);
-			} while (nombre.isEmpty());
-			System.out.println("");
-			String plataforma = null;
-			System.out.println("Plataforma: ");
-			do {
-				try {
-					plataforma = sc.nextLine();
-					Validar.validar_plataforma(plataforma);
-					videojuego.setPlataforma(plataforma);
-				} catch (IllegalArgumentException e) {
-					System.err.println("Plataforma no valida");
-				}
-			} while (videojuego.getPlataforma() == null);
-			System.out.println("Fecha de lanzamiento del juego:");
-			LocalDate fecha = null;
-			do {
-				try {
-					System.out.println("Introduce el dia de lanzamiento");
-					int dia = ex.controlInt();
-					System.out.println("Introduce el mes de lanzamiento");
-					int mes = ex.controlInt();
-					System.out.println("Introduce el anio de lanzamiento");
-					int anio = ex.controlInt();
-					Validar.verificar_fecha(LocalDate.of(anio, mes, dia));
-					fecha = LocalDate.of(anio, mes, dia);
-					videojuego.setFecha_lanzamiento(fecha);
-				} catch (IllegalArgumentException e) {
-					System.err.println("Fecha de lanzamiento no válida");
-				} catch (java.time.DateTimeException t) {
-					System.err.println("Fecha de lanzamiento no válida");
-				}
-			} while (fecha == null);
-			System.out.println("Se ha creado el videojuego");
-			lista.put(saber_id() + 1, videojuego);
-
-		}
-
-	}
+	
 
 	/**
 	 * Metodo que nos permite imprimir por panatalla todos los juegos que se han
